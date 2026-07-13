@@ -1,0 +1,60 @@
+[0m13:40:30.105352 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'start', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x10a9dd2b0>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x10bb3b890>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x10bb3b610>]}
+
+
+============================== 13:40:30.109822 | 8d41ebbb-4571-4f8f-bfe8-ecb4e8159805 ==============================
+[0m13:40:30.109822 [info ] [MainThread]: Running with dbt=1.11.12
+[0m13:40:30.110154 [debug] [MainThread]: running dbt with arguments {'introspect': 'True', 'warn_error': 'None', 'version_check': 'True', 'partial_parse': 'True', 'no_print': 'None', 'indirect_selection': 'eager', 'log_path': 'logs', 'profiles_dir': '/Users/adhithiyavalavan/.dbt', 'target_path': 'None', 'quiet': 'False', 'write_json': 'True', 'empty': 'None', 'use_colors': 'True', 'invocation_command': 'dbt init healthcare_analytics', 'send_anonymous_usage_stats': 'True', 'log_cache_events': 'False', 'warn_error_options': 'WarnErrorOptionsV2(error=[], warn=[], silence=[])', 'cache_selected_only': 'False', 'debug': 'False', 'printer_width': '80', 'fail_fast': 'False', 'log_format': 'default', 'use_experimental_parser': 'False', 'static_parser': 'True'}
+[0m13:40:30.119362 [info ] [MainThread]: Creating dbt configuration folder at /Users/adhithiyavalavan/.dbt
+[0m13:40:30.120316 [debug] [MainThread]: Starter project path: /Users/adhithiyavalavan/Healthcare-Executive-Analytics/venv/lib/python3.13/site-packages/dbt/include/starter_project
+[0m13:40:30.125051 [info ] [MainThread]: 
+Your new dbt project "healthcare_analytics" was created!
+
+For more information on how to configure the profiles.yml file,
+please consult the dbt documentation here:
+
+  https://docs.getdbt.com/docs/configure-your-profile
+
+One more thing:
+
+Need help? Don't hesitate to reach out to us via GitHub issues or on Slack:
+
+  https://community.getdbt.com/
+
+Happy modeling!
+
+[0m13:40:30.125302 [info ] [MainThread]: Setting up your profile.
+[0m13:40:39.044606 [info ] [MainThread]: Profile healthcare_analytics written to /Users/adhithiyavalavan/.dbt/profiles.yml using target's sample configuration. Once updated, you'll be able to start developing with dbt.
+[0m13:40:39.074607 [debug] [MainThread]: Resource report: {"command_name": "init", "command_success": true, "command_wall_clock_time": 9.013521, "process_in_blocks": "0", "process_kernel_time": 0.167027, "process_mem_max_rss": "112640000", "process_out_blocks": "0", "process_user_time": 0.740928}
+[0m13:40:39.075039 [debug] [MainThread]: Command `dbt init` succeeded at 13:40:39.074947 after 9.01 seconds
+[0m13:40:39.075265 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'end', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x10bb65940>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x10b4a8830>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x10bcd49e0>]}
+[0m13:40:39.075499 [debug] [MainThread]: Flushing usage events
+[0m13:40:39.674103 [debug] [MainThread]: An error was encountered while trying to flush usage events
+[0m13:52:54.955303 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'start', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x108a9d2b0>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x109bfb890>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x109bfb610>]}
+
+
+============================== 13:52:54.959375 | a3626f9c-0083-4c3c-8bcf-ea7e179e5df8 ==============================
+[0m13:52:54.959375 [info ] [MainThread]: Running with dbt=1.11.12
+[0m13:52:54.959689 [debug] [MainThread]: running dbt with arguments {'warn_error_options': 'WarnErrorOptionsV2(error=[], warn=[], silence=[])', 'warn_error': 'None', 'target_path': 'None', 'printer_width': '80', 'introspect': 'True', 'static_parser': 'True', 'use_colors': 'True', 'version_check': 'True', 'indirect_selection': 'eager', 'invocation_command': 'dbt init dbt_healthcare', 'write_json': 'True', 'log_format': 'default', 'log_path': 'logs', 'empty': 'None', 'debug': 'False', 'cache_selected_only': 'False', 'log_cache_events': 'False', 'partial_parse': 'True', 'use_experimental_parser': 'False', 'profiles_dir': '/Users/adhithiyavalavan/.dbt', 'fail_fast': 'False', 'quiet': 'False', 'send_anonymous_usage_stats': 'True', 'no_print': 'None'}
+[0m13:52:54.974041 [debug] [MainThread]: Starter project path: /Users/adhithiyavalavan/Healthcare-Executive-Analytics/venv/lib/python3.13/site-packages/dbt/include/starter_project
+[0m13:52:54.980891 [info ] [MainThread]: 
+Your new dbt project "dbt_healthcare" was created!
+
+For more information on how to configure the profiles.yml file,
+please consult the dbt documentation here:
+
+  https://docs.getdbt.com/docs/configure-your-profile
+
+One more thing:
+
+Need help? Don't hesitate to reach out to us via GitHub issues or on Slack:
+
+  https://community.getdbt.com/
+
+Happy modeling!
+
+[0m13:52:54.981092 [info ] [MainThread]: Setting up your profile.
+[0m13:52:57.372932 [debug] [MainThread]: Resource report: {"command_name": "init", "command_success": true, "command_wall_clock_time": 2.4615247, "process_in_blocks": "0", "process_kernel_time": 0.185207, "process_mem_max_rss": "131645440", "process_out_blocks": "0", "process_user_time": 0.744869}
+[0m13:52:57.373244 [debug] [MainThread]: Command `dbt init` succeeded at 13:52:57.373187 after 2.46 seconds
+[0m13:52:57.373412 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'end', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x109c29940>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x109568830>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x109d94c00>]}
+[0m13:52:57.373598 [debug] [MainThread]: Flushing usage events
+[0m13:52:57.779847 [debug] [MainThread]: An error was encountered while trying to flush usage events

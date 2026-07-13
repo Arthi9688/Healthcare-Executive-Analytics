@@ -1,0 +1,144 @@
+version: 2
+
+models:
+  - name: stg_departments
+    description: >
+      Clean department reference data. One row represents one
+      fictional ambulatory department.
+    columns:
+      - name: department_id
+        description: Unique department identifier.
+        data_tests:
+          - unique
+          - not_null
+
+      - name: department_name
+        data_tests:
+          - not_null
+
+  - name: stg_providers
+    description: >
+      Clean provider reference data. One row represents one
+      fictional ambulatory provider.
+    columns:
+      - name: provider_id
+        data_tests:
+          - unique
+          - not_null
+
+      - name: department_id
+        data_tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('stg_departments')
+                field: department_id
+
+      - name: provider_type
+        data_tests:
+          - accepted_values:
+              arguments:
+                values:
+                  - Physician
+                  - APP
+
+  - name: stg_patients
+    description: >
+      Synthetic patient attributes with no names, addresses,
+      birth dates, or real identifiers.
+    columns:
+      - name: patient_id
+        data_tests:
+          - unique
+          - not_null
+
+  - name: stg_appointment_requests
+    description: >
+      Ambulatory appointment demand. One row represents one
+      appointment request.
+    columns:
+      - name: request_id
+        data_tests:
+          - unique
+          - not_null
+
+      - name: patient_id
+        data_tests:
+          - relationships:
+              arguments:
+                to: ref('stg_patients')
+                field: patient_id
+
+      - name: department_id
+        data_tests:
+          - relationships:
+              arguments:
+                to: ref('stg_departments')
+                field: department_id
+
+      - name: patient_type
+        data_tests:
+          - accepted_values:
+              arguments:
+                values:
+                  - new
+                  - established
+
+      - name: priority
+        data_tests:
+          - accepted_values:
+              arguments:
+                values:
+                  - routine
+                  - urgent
+                  - high
+
+  - name: stg_appointments
+    description: >
+      Scheduled ambulatory visits. One row represents one
+      appointment.
+    columns:
+      - name: appointment_id
+        data_tests:
+          - unique
+          - not_null
+
+      - name: request_id
+        data_tests:
+          - relationships:
+              arguments:
+                to: ref('stg_appointment_requests')
+                field: request_id
+
+      - name: provider_id
+        data_tests:
+          - relationships:
+              arguments:
+                to: ref('stg_providers')
+                field: provider_id
+
+      - name: appointment_status
+        data_tests:
+          - accepted_values:
+              arguments:
+                values:
+                  - completed
+                  - cancelled
+                  - no show
+                  - scheduled
+
+  - name: stg_provider_monthly_capacity
+    description: >
+      Monthly available, booked, and patient-facing hours by provider.
+    columns:
+      - name: provider_id
+        data_tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('stg_providers')
+                field: provider_id
+
+      - name: month_start
+        data_tests:
+          - not_null

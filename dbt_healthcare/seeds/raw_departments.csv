@@ -1,0 +1,11 @@
+department_id,department_name,division_name,region_name,specialty_name,active_flag
+1,North Family Medicine,Primary Care,North,Family Medicine,True
+2,Central Internal Medicine,Primary Care,Central,Internal Medicine,True
+3,East Cardiology,Medical Specialties,East,Cardiology,True
+4,North Neurology,Medical Specialties,North,Neurology,True
+5,Central Gastroenterology,Medical Specialties,Central,Gastroenterology,True
+6,West Endocrinology,Medical Specialties,West,Endocrinology,True
+7,East Orthopedics,Surgical Specialties,East,Orthopedics,True
+8,South General Surgery,Surgical Specialties,South,General Surgery,True
+9,Central Women's Health,Women's Health,Central,Obstetrics and Gynecology,True
+10,West Dermatology,Medical Specialties,West,Dermatology,True
