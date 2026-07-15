@@ -1,0 +1,13 @@
+department_id,department_name,division,lhs,region,specialty,hospital_outpatient_flag,count_resource_flag,active_flag
+101,North Family Medicine,Primary Care,North Health System,North,Family Medicine,N,Y,Y
+102,Central Internal Medicine,Primary Care,Central Health System,Central,Internal Medicine,N,Y,Y
+103,East Cardiology,Medical Specialties,East Health System,East,Cardiology,Y,Y,Y
+104,North Neurology,Medical Specialties,North Health System,North,Neurology,Y,Y,Y
+105,Central Gastroenterology,Medical Specialties,Central Health System,Central,Gastroenterology,Y,Y,Y
+106,West Endocrinology,Medical Specialties,West Health System,West,Endocrinology,N,Y,Y
+107,East Orthopedics,Surgical Specialties,East Health System,East,Orthopedics,Y,Y,Y
+108,South General Surgery,Surgical Specialties,South Health System,South,General Surgery,Y,Y,Y
+109,Central Women's Health,Women's Health,Central Health System,Central,Obstetrics and Gynecology,N,Y,Y
+110,West Dermatology,Medical Specialties,West Health System,West,Dermatology,N,Y,Y
+111,Coastal Pulmonology,Medical Specialties,Coastal Health System,Coastal,Pulmonology,Y,Y,Y
+112,Trellis Specialty Clinic,Medical Specialties,Trellis Health System,Trellis,Rheumatology,N,Y,Y

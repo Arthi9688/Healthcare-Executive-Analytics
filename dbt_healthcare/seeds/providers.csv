@@ -1,0 +1,81 @@
+provider_durable_key,provider_id,provider_name,provider_type,provider_type_group,primary_department_id,primary_specialty,active_status,is_current,npi,user_id
+50001,PROV_0001,Provider 001,Physician,Physician,102,Internal Medicine,ACTIVE,1,9000000001,USER_0001
+50002,PROV_0002,Provider 002,APP,Advanced Practice Provider,110,Dermatology,ACTIVE,1,9000000002,USER_0002
+50003,PROV_0003,Provider 003,Physician,Physician,108,General Surgery,ACTIVE,1,9000000003,USER_0003
+50004,PROV_0004,Provider 004,Physician,Physician,106,Endocrinology,ACTIVE,1,9000000004,USER_0004
+50005,PROV_0005,Provider 005,APP,Advanced Practice Provider,106,Endocrinology,ACTIVE,1,9000000005,USER_0005
+50006,PROV_0006,Provider 006,APP,Advanced Practice Provider,111,Pulmonology,ACTIVE,1,9000000006,USER_0006
+50007,PROV_0007,Provider 007,Physician,Physician,102,Internal Medicine,ACTIVE,1,9000000007,USER_0007
+50008,PROV_0008,Provider 008,Physician,Physician,109,Obstetrics and Gynecology,ACTIVE,1,9000000008,USER_0008
+50009,PROV_0009,Provider 009,Physician,Physician,103,Cardiology,ACTIVE,1,9000000009,USER_0009
+50010,PROV_0010,Provider 010,Physician,Physician,102,Internal Medicine,ACTIVE,1,9000000010,USER_0010
+50011,PROV_0011,Provider 011,Physician,Physician,107,Orthopedics,ACTIVE,1,9000000011,USER_0011
+50012,PROV_0012,Provider 012,Physician,Physician,112,Rheumatology,ACTIVE,1,9000000012,USER_0012
+50013,PROV_0013,Provider 013,APP,Advanced Practice Provider,109,Obstetrics and Gynecology,ACTIVE,1,9000000013,USER_0013
+50014,PROV_0014,Provider 014,Physician,Physician,110,Dermatology,ACTIVE,1,9000000014,USER_0014
+50015,PROV_0015,Provider 015,Physician,Physician,109,Obstetrics and Gynecology,ACTIVE,1,9000000015,USER_0015
+50016,PROV_0016,Provider 016,APP,Advanced Practice Provider,110,Dermatology,ACTIVE,1,9000000016,USER_0016
+50017,PROV_0017,Provider 017,Physician,Physician,107,Orthopedics,ACTIVE,1,9000000017,USER_0017
+50018,PROV_0018,Provider 018,Physician,Physician,102,Internal Medicine,ACTIVE,1,9000000018,USER_0018
+50019,PROV_0019,Provider 019,Physician,Physician,111,Pulmonology,ACTIVE,1,9000000019,USER_0019
+50020,PROV_0020,Provider 020,Physician,Physician,106,Endocrinology,ACTIVE,1,9000000020,USER_0020
+50021,PROV_0021,Provider 021,Physician,Physician,107,Orthopedics,ACTIVE,1,9000000021,USER_0021
+50022,PROV_0022,Provider 022,Physician,Physician,105,Gastroenterology,ACTIVE,1,9000000022,USER_0022
+50023,PROV_0023,Provider 023,Physician,Physician,103,Cardiology,ACTIVE,1,9000000023,USER_0023
+50024,PROV_0024,Provider 024,APP,Advanced Practice Provider,112,Rheumatology,ACTIVE,1,9000000024,USER_0024
+50025,PROV_0025,Provider 025,Physician,Physician,110,Dermatology,ACTIVE,1,9000000025,USER_0025
+50026,PROV_0026,Provider 026,Physician,Physician,108,General Surgery,ACTIVE,1,9000000026,USER_0026
+50027,PROV_0027,Provider 027,Physician,Physician,105,Gastroenterology,ACTIVE,1,9000000027,USER_0027
+50028,PROV_0028,Provider 028,Physician,Physician,110,Dermatology,ACTIVE,1,9000000028,USER_0028
+50029,PROV_0029,Provider 029,Physician,Physician,107,Orthopedics,ACTIVE,1,9000000029,USER_0029
+50030,PROV_0030,Provider 030,Physician,Physician,106,Endocrinology,ACTIVE,1,9000000030,USER_0030
+50031,PROV_0031,Provider 031,Physician,Physician,106,Endocrinology,ACTIVE,1,9000000031,USER_0031
+50032,PROV_0032,Provider 032,Physician,Physician,103,Cardiology,ACTIVE,1,9000000032,USER_0032
+50033,PROV_0033,Provider 033,APP,Advanced Practice Provider,102,Internal Medicine,ACTIVE,1,9000000033,USER_0033
+50034,PROV_0034,Provider 034,Physician,Physician,107,Orthopedics,ACTIVE,1,9000000034,USER_0034
+50035,PROV_0035,Provider 035,Physician,Physician,111,Pulmonology,ACTIVE,1,9000000035,USER_0035
+50036,PROV_0036,Provider 036,Physician,Physician,101,Family Medicine,ACTIVE,1,9000000036,USER_0036
+50037,PROV_0037,Provider 037,Physician,Physician,111,Pulmonology,ACTIVE,1,9000000037,USER_0037
+50038,PROV_0038,Provider 038,Physician,Physician,110,Dermatology,ACTIVE,1,9000000038,USER_0038
+50039,PROV_0039,Provider 039,Physician,Physician,104,Neurology,ACTIVE,1,9000000039,USER_0039
+50040,PROV_0040,Provider 040,APP,Advanced Practice Provider,108,General Surgery,ACTIVE,1,9000000040,USER_0040
+50041,PROV_0041,Provider 041,Physician,Physician,102,Internal Medicine,ACTIVE,1,9000000041,USER_0041
+50042,PROV_0042,Provider 042,Physician,Physician,110,Dermatology,ACTIVE,1,9000000042,USER_0042
+50043,PROV_0043,Provider 043,APP,Advanced Practice Provider,109,Obstetrics and Gynecology,ACTIVE,1,9000000043,USER_0043
+50044,PROV_0044,Provider 044,Physician,Physician,105,Gastroenterology,ACTIVE,1,9000000044,USER_0044
+50045,PROV_0045,Provider 045,Physician,Physician,101,Family Medicine,ACTIVE,1,9000000045,USER_0045
+50046,PROV_0046,Provider 046,Physician,Physician,112,Rheumatology,ACTIVE,1,9000000046,USER_0046
+50047,PROV_0047,Provider 047,APP,Advanced Practice Provider,106,Endocrinology,ACTIVE,1,9000000047,USER_0047
+50048,PROV_0048,Provider 048,Physician,Physician,111,Pulmonology,ACTIVE,1,9000000048,USER_0048
+50049,PROV_0049,Provider 049,Physician,Physician,109,Obstetrics and Gynecology,ACTIVE,1,9000000049,USER_0049
+50050,PROV_0050,Provider 050,Physician,Physician,110,Dermatology,ACTIVE,1,9000000050,USER_0050
+50051,PROV_0051,Provider 051,Physician,Physician,110,Dermatology,ACTIVE,1,9000000051,USER_0051
+50052,PROV_0052,Provider 052,Physician,Physician,103,Cardiology,ACTIVE,1,9000000052,USER_0052
+50053,PROV_0053,Provider 053,Physician,Physician,105,Gastroenterology,ACTIVE,1,9000000053,USER_0053
+50054,PROV_0054,Provider 054,Physician,Physician,106,Endocrinology,ACTIVE,1,9000000054,USER_0054
+50055,PROV_0055,Provider 055,Physician,Physician,106,Endocrinology,ACTIVE,1,9000000055,USER_0055
+50056,PROV_0056,Provider 056,Physician,Physician,101,Family Medicine,ACTIVE,1,9000000056,USER_0056
+50057,PROV_0057,Provider 057,Physician,Physician,107,Orthopedics,ACTIVE,1,9000000057,USER_0057
+50058,PROV_0058,Provider 058,Physician,Physician,102,Internal Medicine,INACTIVE,1,9000000058,USER_0058
+50059,PROV_0059,Provider 059,Physician,Physician,109,Obstetrics and Gynecology,ACTIVE,1,9000000059,USER_0059
+50060,PROV_0060,Provider 060,APP,Advanced Practice Provider,109,Obstetrics and Gynecology,ACTIVE,1,9000000060,USER_0060
+50061,PROV_0061,Provider 061,APP,Advanced Practice Provider,112,Rheumatology,ACTIVE,1,9000000061,USER_0061
+50062,PROV_0062,Provider 062,Physician,Physician,109,Obstetrics and Gynecology,ACTIVE,1,9000000062,USER_0062
+50063,PROV_0063,Provider 063,Physician,Physician,105,Gastroenterology,ACTIVE,1,9000000063,USER_0063
+50064,PROV_0064,Provider 064,APP,Advanced Practice Provider,112,Rheumatology,ACTIVE,1,9000000064,USER_0064
+50065,PROV_0065,Provider 065,APP,Advanced Practice Provider,105,Gastroenterology,ACTIVE,1,9000000065,USER_0065
+50066,PROV_0066,Provider 066,Physician,Physician,104,Neurology,ACTIVE,1,9000000066,USER_0066
+50067,PROV_0067,Provider 067,Physician,Physician,111,Pulmonology,ACTIVE,1,9000000067,USER_0067
+50068,PROV_0068,Provider 068,Physician,Physician,105,Gastroenterology,ACTIVE,1,9000000068,USER_0068
+50069,PROV_0069,Provider 069,Physician,Physician,101,Family Medicine,ACTIVE,1,9000000069,USER_0069
+50070,PROV_0070,Provider 070,APP,Advanced Practice Provider,106,Endocrinology,ACTIVE,1,9000000070,USER_0070
+50071,PROV_0071,Provider 071,Physician,Physician,110,Dermatology,ACTIVE,1,9000000071,USER_0071
+50072,PROV_0072,Provider 072,Physician,Physician,103,Cardiology,ACTIVE,1,9000000072,USER_0072
+50073,PROV_0073,Provider 073,Physician,Physician,106,Endocrinology,ACTIVE,1,9000000073,USER_0073
+50074,PROV_0074,Provider 074,Physician,Physician,102,Internal Medicine,ACTIVE,1,9000000074,USER_0074
+50075,PROV_0075,Provider 075,Physician,Physician,109,Obstetrics and Gynecology,ACTIVE,1,9000000075,USER_0075
+50076,PROV_0076,Provider 076,APP,Advanced Practice Provider,106,Endocrinology,ACTIVE,1,9000000076,USER_0076
+50077,PROV_0077,Provider 077,APP,Advanced Practice Provider,104,Neurology,ACTIVE,1,9000000077,USER_0077
+50078,PROV_0078,Provider 078,Physician,Physician,103,Cardiology,ACTIVE,1,9000000078,USER_0078
+50079,PROV_0079,Provider 079,Physician,Physician,107,Orthopedics,ACTIVE,1,9000000079,USER_0079
+50080,PROV_0080,Provider 080,Physician,Physician,109,Obstetrics and Gynecology,ACTIVE,1,9000000080,USER_0080
