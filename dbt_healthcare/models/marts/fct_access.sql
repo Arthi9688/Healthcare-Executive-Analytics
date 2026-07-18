@@ -90,17 +90,14 @@ eligible_appointments as (
         a.source_wait_days,
         a.source_admin_days,
 
-        date_diff(
-            'day',
-            a.appointment_made_date,
+        ( a.appointment_made_date -
             a.appointment_date
         ) as calculated_wait_days,
 
         case
             when a.referral_entry_date is not null
-            then date_diff(
-                'day',
-                a.referral_entry_date,
+            then (
+                a.referral_entry_date -
                 a.appointment_made_date
             )
             else null

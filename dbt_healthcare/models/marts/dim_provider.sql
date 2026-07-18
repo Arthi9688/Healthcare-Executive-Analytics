@@ -27,12 +27,9 @@ appointments as (
     select
         provider_id,
         count(*) as appointment_count,
-        median(
-            date_diff(
-                'day',
-                appointment_made_date,
-                appointment_date
-            )
+        percentile_cont(0.5)
+         within group (
+        order by appointment_date - appointment_made_date
         ) as median_wait_days
     from {{ ref('stg_appointments') }}
     where is_new_visit = true
