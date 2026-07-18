@@ -2,99 +2,142 @@ version: 2
 
 models:
   - name: fct_productivity
-
-    semantic_model:
-      enabled: true
-
-    agg_time_dimension: month_begin_date
-
     description: >
       One row per provider per department per month with productivity
       information.
 
     columns:
-
-      # entities
-
       - name: provider_id
-        description: Unique provider identifier.
-        entity:
-          type: primary
-          name: provider_id
+        description: Provider identifier.
+        data_tests:
+          - not_null
 
       - name: department_id
         description: Department identifier.
-        entity:
-          type: foreign
-          name: department_id
-
-      # time dimensions
+        data_tests:
+          - not_null
 
       - name: month_begin_date
         description: Beginning of the reporting month.
-        dimension:
-          type: time
-        granularity: month
+        data_tests:
+          - not_null
 
       - name: month_end_date
         description: End of the reporting month.
-        dimension:
-          type: time
-        granularity: month
-
-      # dimensions
 
       - name: calendar_year
-        dimension:
-          type: categorical
+        description: Calendar year.
 
       - name: fiscal_year
-        dimension:
-          type: categorical
+        description: Fiscal year.
 
-    metrics:
+      - name: percent_patient_facing
+        description: Percentage of provider hours that are patient-facing.
 
+      - name: meets_80_percent_flag
+        description: Indicates whether the provider met the 80% target.
+
+      - name: patient_facing_denominator_flag
+        description: Indicates whether the row has valid patient-facing data.
+
+
+semantic_models:
+  - name: productivity
+    description: Semantic model for provider productivity performance.
+    model: ref('fct_productivity')
+
+    defaults:
+      agg_time_dimension: month_begin_date
+
+    entities:
+      - name: provider
+        type: primary
+        expr: provider_id
+
+      - name: department
+        type: foreign
+        expr: department_id
+
+    dimensions:
+      - name: month_begin_date
+        type: time
+        type_params:
+          time_granularity: month
+
+      - name: month_end_date
+        type: time
+        type_params:
+          time_granularity: month
+
+      - name: calendar_year
+        type: categorical
+
+      - name: fiscal_year
+        type: categorical
+
+    measures:
       - name: total_patient_facing_percent
-        label: Total Patient Facing Percent
         description: Sum of patient-facing percentages.
-        type: simple
         agg: sum
         expr: percent_patient_facing
 
       - name: provider_count
-        label: Provider Count
-        description: Number of providers included in productivity reporting.
-        type: simple
+        description: Number of distinct providers included in reporting.
         agg: count_distinct
         expr: provider_id
 
       - name: providers_meeting_80_percent
-        label: Providers Meeting 80 Percent
-        description: Providers meeting the 80% patient-facing target.
-        type: simple
+        description: Number of provider rows meeting the 80% target.
         agg: sum
         expr: meets_80_percent_flag
 
       - name: providers_with_patient_facing
-        label: Providers With Patient Facing Data
-        description: Providers with valid patient-facing information.
-        type: simple
+        description: Number of provider rows with valid patient-facing data.
         agg: sum
         expr: patient_facing_denominator_flag
 
 
 metrics:
+  - name: total_patient_facing_percent
+    label: Total Patient Facing Percent
+    description: Sum of patient-facing percentages.
+    type: simple
+    type_params:
+      measure: total_patient_facing_percent
+
+  - name: provider_count
+    label: Provider Count
+    description: Distinct count of providers included in productivity reporting.
+    type: simple
+    type_params:
+      measure: provider_count
+
+  - name: providers_meeting_80_percent
+    label: Providers Meeting 80 Percent
+    description: Number of provider rows meeting the 80% target.
+    type: simple
+    type_params:
+      measure: providers_meeting_80_percent
+
+  - name: providers_with_patient_facing
+    label: Providers With Patient Facing Data
+    description: Number of provider rows with valid patient-facing information.
+    type: simple
+    type_params:
+      measure: providers_with_patient_facing
 
   - name: average_patient_facing_percent
     label: Average Patient Facing Percent
-    description: Average patient-facing percentage across providers.
+    description: Average patient-facing percentage across provider records.
     type: ratio
-    numerator: total_patient_facing_percent
-    denominator: providers_with_patient_facing
+    type_params:
+      numerator: total_patient_facing_percent
+      denominator: providers_with_patient_facing
 
   - name: providers_meeting_80_percent_pct
     label: Providers Meeting 80 Percent Patient Facing Hours
-    description: Percentage of providers meeting the 80% patient-facing target.
+    description: Percentage of provider records meeting the 80% target.
     type: ratio
-    numerator: providers_meeting_80_percent
-    denominator: provider_count
+    type_params:
+      numerator: providers_meeting_80_percent
+      denominator: providers_with_patient_facing
