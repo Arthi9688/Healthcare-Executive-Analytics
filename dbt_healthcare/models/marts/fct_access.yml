@@ -1,0 +1,197 @@
+version: 2
+
+models:
+  - name: fct_access
+
+    semantic_model:
+      enabled: true
+
+    agg_time_dimension: appointment_made_date
+
+    description: >
+      One row per eligible new appointment with access wait days
+      and administrative days information.
+
+    columns:
+
+      # entities
+
+      - name: appointment_id
+        description: Unique identifier for the appointment.
+        entity:
+          type: primary
+          name: appointment_id
+        data_tests:
+          - not_null
+          - unique
+
+      - name: patient_id
+        description: Patient associated with the appointment.
+        entity:
+          type: foreign
+          name: patient_id
+        data_tests:
+          - not_null
+
+      - name: patient_encounter_id
+        description: Encounter associated with the appointment.
+        entity:
+          type: foreign
+          name: patient_encounter_id
+
+      - name: provider_id
+        description: Provider associated with the appointment.
+        entity:
+          type: foreign
+          name: provider_id
+        data_tests:
+          - not_null
+
+      - name: department_id
+        description: Department associated with the appointment.
+        entity:
+          type: foreign
+          name: department_id
+        data_tests:
+          - not_null
+
+      - name: referral_id
+        description: Referral associated with the appointment.
+        entity:
+          type: foreign
+          name: referral_id
+
+      # time dimensions
+
+      - name: appointment_made_date
+        description: Date the appointment was scheduled.
+        granularity: day
+        dimension:
+          type: time
+        data_tests:
+          - not_null
+
+      - name: appointment_date
+        description: Date of the scheduled appointment.
+        granularity: day
+        dimension:
+          type: time
+
+      - name: referral_entry_date
+        description: Date the referral was entered.
+        granularity: day
+        dimension:
+          type: time
+
+      - name: month_begin_date
+        description: First day of the reporting month.
+        granularity: month
+        dimension:
+          type: time
+
+      # dimensions
+
+      - name: scheduled_online
+        description: Indicates whether the appointment was scheduled online.
+        dimension:
+          type: categorical
+
+      - name: visit_type_category
+        description: Grouped visit type category.
+        dimension:
+          type: categorical
+
+      - name: visit_type
+        description: Appointment visit type.
+        dimension:
+          type: categorical
+
+      - name: new_to_enterprise
+        description: Indicates whether the patient is new to the enterprise.
+        dimension:
+          type: categorical
+
+      - name: new_to_division
+        description: Indicates whether the patient is new to the division.
+        dimension:
+          type: categorical
+
+      - name: calendar_year
+        description: Calendar year.
+        dimension:
+          type: categorical
+
+      - name: fiscal_year
+        description: Fiscal year.
+        dimension:
+          type: categorical
+
+    metrics:
+
+      - name: appointments_meeting_14_wait_days
+        description: >
+          Number of appointments with calculated wait days
+          of 14 days or less.
+        type: simple
+        label: Appointments meeting 14 wait days
+        agg: sum
+        expr: meets_14_wait_days_flag
+
+      - name: appointments_with_wait_days
+        description: >
+          Number of appointments with a valid calculated wait days value.
+        type: simple
+        label: Appointments with wait days
+        agg: sum
+        expr: wait_days_denominator_flag
+
+      - name: appointments_meeting_7_admin_days
+        description: >
+          Number of appointments with calculated administrative days
+          of 7 days or less.
+        type: simple
+        label: Appointments meeting 7 admin days
+        agg: sum
+        expr: meets_7_admin_days_flag
+
+      - name: appointments_with_admin_days
+        description: >
+          Number of appointments with a valid calculated administrative
+          days value.
+        type: simple
+        label: Appointments with admin days
+        agg: sum
+        expr: admin_days_denominator_flag
+
+      - name: median_wait_days
+        description: Median calculated wait days for eligible appointments.
+        type: simple
+        label: Median wait days
+        agg: median
+        expr: calculated_wait_days
+
+      - name: appointment_count
+        description: Distinct count of eligible appointments.
+        type: simple
+        label: Appointment count
+        agg: count_distinct
+        expr: appointment_id
+
+
+# ratio metrics
+
+metrics:
+
+  - name: appointments_meeting_14_wait_days_pct
+    label: Appointments Meeting 14 Wait Days %
+    description: Percentage of appointments meeting the 14-day wait standard.
+    type: ratio
+    numerator: appointments_meeting_14_wait_days
+    denominator: appointments_with_wait_days
+
+  - name: appointments_meeting_7_admin_days_pct
+    label: Appointments Meeting 7 Admin Days %
+    description: Percentage of appointments meeting the 7-day administrative standard.
+    type: ratio
+    numerator: appointments_meeting_7_admin_days
+    denominator: appointments_with_admin_days

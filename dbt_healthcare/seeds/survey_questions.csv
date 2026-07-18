@@ -1,6 +1,0 @@
-survey_question_key,question_name,question_text,minimum_score,maximum_score,press_ganey_source_flag,deleted_flag
-ACCESS_Q1,Ease of getting an appointment,How easy was it to get an appointment?,1,5,1,0
-ACCESS_Q2,Ease of scheduling an appointment,How easy was it to schedule your appointment?,1,5,1,0
-ACCESS_Q3,Convenience of available appointment times,How convenient were the available appointment times?,1,5,1,0
-ACCESS_Q4,Ease of contacting the clinic,How easy was it to contact the clinic?,1,5,1,0
-OTHER_Q1,General communication,How would you rate general communication?,1,5,1,0

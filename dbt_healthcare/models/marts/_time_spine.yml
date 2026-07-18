@@ -1,0 +1,19 @@
+version: 2
+
+models:
+  - name: time_spine_daily
+    description: >
+      Daily time spine used by MetricFlow for time-based joins,
+      aggregations, and metric calculations.
+
+    time_spine:
+      standard_granularity_column: date_day
+
+    columns:
+      - name: date_day
+        description: One calendar date per row at daily granularity.
+        granularity: day
+
+        data_tests:
+          - not_null
+          - unique

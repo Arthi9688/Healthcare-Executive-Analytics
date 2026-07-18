@@ -31,6 +31,16 @@ clean-targets:         # directories to be removed by `dbt clean`
 # files using the `{{ config(...) }}` macro.
 models:
   dbt_healthcare:
-    # Config indicated by + and applies to all files under models/example/
-    example:
+    staging:
       +materialized: view
+    marts:
+      +materialized: table
+
+seeds:
+  dbt_healthcare:
+    providers:
+      +column_types:
+        provider_durable_key: bigint
+        primary_department_id: bigint
+        is_current: integer
+        npi: varchar

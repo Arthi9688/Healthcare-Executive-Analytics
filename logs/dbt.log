@@ -58,3 +58,19 @@ Happy modeling!
 [0m13:52:57.373412 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'end', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x109c29940>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x109568830>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x109d94c00>]}
 [0m13:52:57.373598 [debug] [MainThread]: Flushing usage events
 [0m13:52:57.779847 [debug] [MainThread]: An error was encountered while trying to flush usage events
+[0m09:04:39.136204 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'start', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x10a8ba270>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x10bc73610>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x10bc739d0>]}
+
+
+============================== 09:04:39.140270 | 625e2e1c-1ecd-4da2-b6ba-f20d5dde5afb ==============================
+[0m09:04:39.140270 [info ] [MainThread]: Running with dbt=1.12.0
+[0m09:04:39.140603 [debug] [MainThread]: running dbt with arguments {'use_colors': 'True', 'log_path': 'logs', 'cache_selected_only': 'False', 'partial_parse': 'True', 'version_check': 'True', 'static_parser': 'True', 'hints_enabled': 'True', 'debug': 'False', 'invocation_command': 'dbt parse', 'warn_error_options': 'WarnErrorOptionsV2(error=[], warn=[], silence=[])', 'warn_error': 'None', 'log_cache_events': 'False', 'profiles_dir': '/Users/adhithiyavalavan/.dbt', 'log_format': 'default', 'printer_width': '80', 'target_path': 'None', 'no_print': 'None', 'empty': 'None', 'fail_fast': 'False', 'indirect_selection': 'eager', 'write_json': 'True', 'use_experimental_parser': 'False', 'maximum_seed_size_mib': '1', 'introspect': 'True', 'send_anonymous_usage_stats': 'True', 'quiet': 'False'}
+[0m09:04:39.140947 [error] [MainThread]: [[31mERROR[0m]: Encountered an error:
+Runtime Error
+  No dbt_project.yml found at expected path /Users/adhithiyavalavan/Healthcare-Executive-Analytics/dbt_project.yml
+  Verify that each entry within packages.yml (and their transitive dependencies) contains a file named dbt_project.yml
+  
+[0m09:04:39.143320 [debug] [MainThread]: Resource report: {"command_name": "parse", "command_success": false, "command_wall_clock_time": 0.06355375, "process_in_blocks": "0", "process_kernel_time": 0.156578, "process_mem_max_rss": "120913920", "process_out_blocks": "0", "process_user_time": 0.78272}
+[0m09:04:39.143628 [debug] [MainThread]: Command `dbt parse` failed at 09:04:39.143566 after 0.06 seconds
+[0m09:04:39.143832 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'end', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x10bcd4b00>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x10bcaf890>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x10baf6f10>]}
+[0m09:04:39.144001 [debug] [MainThread]: Flushing usage events
+[0m09:04:39.657141 [debug] [MainThread]: An error was encountered while trying to flush usage events

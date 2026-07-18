@@ -1,0 +1,39 @@
+version: 2
+
+models:
+  - name: dim_provider
+
+    semantic_model:
+      enabled: true
+
+    description: One row per provider with descriptive provider attributes.
+
+    columns:
+      - name: provider_id
+        description: Unique identifier for the provider.
+        entity:
+          name: provider_id
+          type: primary
+        data_tests:
+          - not_null
+          - unique
+
+      - name: provider_name
+        description: Provider name.
+        dimension:
+          type: categorical
+
+      - name: provider_type
+        description: Provider type.
+        dimension:
+          type: categorical
+
+      - name: provider_type_group
+        description: Provider type grouping.
+        dimension:
+          type: categorical
+
+      - name: primary_specialty
+        description: Provider primary specialty.
+        dimension:
+          type: categorical

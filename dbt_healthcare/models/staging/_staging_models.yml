@@ -1,0 +1,141 @@
+version: 2
+
+models:
+  - name: stg_departments
+    description: >
+      Clean department hierarchy. One row represents one
+      synthetic ambulatory department.
+    columns:
+      - name: department_id
+        data_tests:
+          - unique
+          - not_null
+
+      - name: region
+        data_tests:
+          - not_null
+
+  - name: stg_providers
+    description: >
+      Clean provider reference data. One row represents one
+      synthetic provider.
+    columns:
+      - name: provider_durable_key
+        data_tests:
+          - unique
+          - not_null
+
+      - name: provider_id
+        data_tests:
+          - unique
+          - not_null
+
+      - name: primary_department_id
+        data_tests:
+          - relationships:
+              arguments:
+                to: ref('stg_departments')
+                field: department_id
+
+      - name: active_status
+        data_tests:
+          - accepted_values:
+              arguments:
+                values:
+                  - ACTIVE
+                  - INACTIVE
+
+  - name: stg_calendar
+    description: One row per calendar date.
+    columns:
+      - name: calendar_date
+        data_tests:
+          - unique
+          - not_null
+
+      - name: business_day_flag
+        data_tests:
+          - accepted_values:
+              arguments:
+                values: [0, 1]
+
+  - name: stg_patients
+    description: >
+      Validity-only synthetic patient lookup with no identifying
+      or demographic information.
+    columns:
+      - name: patient_id
+        data_tests:
+          - unique
+          - not_null
+
+  - name: stg_appointments
+    description: >
+      Clean appointment records supporting wait-day and
+      admin-day Executive Summary metrics.
+    columns:
+      - name: appointment_id
+        data_tests:
+          - unique
+          - not_null
+
+      - name: patient_encounter_id
+        data_tests:
+          - unique
+          - not_null
+
+      - name: patient_id
+        data_tests:
+          - relationships:
+              arguments:
+                to: ref('stg_patients')
+                field: patient_id
+
+      - name: department_id
+        data_tests:
+          - relationships:
+              arguments:
+                to: ref('stg_departments')
+                field: department_id
+
+      - name: provider_id
+        data_tests:
+          - relationships:
+              arguments:
+                to: ref('stg_providers')
+                field: provider_id
+
+      - name: visit_type_name
+        data_tests:
+          - not_null
+
+  
+  - name: stg_provider_productivity
+    description: >
+      Monthly provider productivity components and source
+      calculations.
+    columns:
+      - name: provider_id
+        data_tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('stg_providers')
+                field: provider_id
+
+      - name: fte_department_id
+        data_tests:
+          - relationships:
+              arguments:
+                to: ref('stg_departments')
+                field: department_id
+
+      - name: clinical_fte
+        data_tests:
+          - not_null
+
+      - name: source_meets_80_percent_flag
+        data_tests:
+          - accepted_values:
+              arguments:
+                values: [0, 1]

@@ -1,0 +1,42 @@
+version: 2
+
+models:
+  - name: dim_department
+
+    semantic_model:
+      enabled: true
+
+    description: One row per department with descriptive department attributes.
+
+    columns:
+      - name: department_id
+        entity:
+          name: department_id
+          type: primary
+        data_tests:
+          - not_null
+          - unique
+
+      - name: department_name
+        dimension:
+          type: categorical
+
+      - name: region
+        dimension:
+          type: categorical
+
+      - name: specialty
+        dimension:
+          type: categorical
+
+      - name: hospital_outpatient_flag
+        dimension:
+          type: categorical
+
+      - name: division
+        dimension:
+          type: categorical
+
+      - name: lhs
+        dimension:
+          type: categorical
