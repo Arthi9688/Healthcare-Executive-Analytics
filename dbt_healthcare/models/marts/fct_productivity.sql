@@ -104,8 +104,11 @@ joined as (
     where d.region <> 'Trellis'
 
       and pr.month_begin_date >= (
-          date_trunc('month', current_date)
-          - interval '24 months'
+          dateadd(
+              month,
+              -24,
+              date_trunc('month', current_date)
+          )
       )
 
       and pr.month_begin_date
@@ -134,7 +137,7 @@ final as (
         specialty,
 
         case
-            when is_hospital_outpatient then 'Y'
+            when is_hospital_outpatient = true then 'Y'
             else 'N'
         end as hospital_outpatient_flag,
 
@@ -146,8 +149,11 @@ final as (
         source_percent_patient_facing
             as percent_patient_facing,
 
-        source_meets_80_percent_flag
-            as meets_80_percent_flag,
+        case
+            when source_meets_80_percent_flag is null then null
+            when source_meets_80_percent_flag = true then 1
+            else 0
+        end as meets_80_percent_flag,
 
         case
             when source_percent_patient_facing is not null then 1

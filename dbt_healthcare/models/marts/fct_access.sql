@@ -90,16 +90,19 @@ eligible_appointments as (
         a.source_wait_days,
         a.source_admin_days,
 
-        ( a.appointment_made_date -
+        DATEDIFF(
+            day,
+            a.appointment_made_date,
             a.appointment_date
         ) as calculated_wait_days,
 
         case
-            when a.referral_entry_date is not null
-            then (
-                a.referral_entry_date -
-                a.appointment_made_date
-            )
+            when a.referral_entry_date is not null then
+                DATEDIFF(
+                    day,
+                    a.referral_entry_date,
+                    a.appointment_made_date
+                )
             else null
         end as calculated_admin_days,
 
@@ -158,8 +161,7 @@ eligible_appointments as (
           - interval '24 months'
       )
 
-      and c.month_begin_date
-          < date_trunc('month', current_date)
+      and c.month_begin_date < date_trunc('month', current_date)
 
 ),
 
