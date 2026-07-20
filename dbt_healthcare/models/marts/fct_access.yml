@@ -14,6 +14,9 @@ models:
 
     config:
       meta:
+        joins:
+          - join: dim_department
+            sql_on: "${fct_access.department_id} = ${dim_department.department_id}"
         metrics:
           appointments_meeting_14_wait_days_pct:
             type: number
