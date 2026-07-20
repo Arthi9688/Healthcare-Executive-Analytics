@@ -23,6 +23,13 @@ models:
         entity:
           name: provider_id
           type: primary
+        config:
+          meta:
+            metrics:
+              provider_count:
+                type: count_distinct
+                label: Provider Count
+                description: Distinct count of providers.
         data_tests:
           - not_null
 
@@ -66,21 +73,54 @@ models:
         dimension:
           type: categorical
 
+      # -------------------------
+      # Metric Columns
+      # -------------------------
 
       - name: percent_patient_facing
         description: Percentage of provider hours that are patient-facing.
         dimension:
           type: categorical
+        config:
+          meta:
+            metrics:
+              total_patient_facing_percent:
+                type: sum
+                label: Total Patient Facing Percent
+                description: Sum of patient-facing percentages.
+
+              average_patient_facing_percent:
+                type: average
+                label: Average Patient Facing Percent
+                description: Average patient-facing percentage.
 
       - name: meets_80_percent_flag
         description: Indicates whether the provider met the 80% target.
         dimension:
           type: categorical
+        config:
+          meta:
+            metrics:
+              providers_meeting_80_percent:
+                type: sum
+                label: Providers Meeting 80 Percent
+                description: Number of provider rows meeting the target.
 
       - name: patient_facing_denominator_flag
         description: Indicates whether the provider has valid patient-facing data.
         dimension:
           type: categorical
+        config:
+          meta:
+            metrics:
+              providers_with_patient_facing:
+                type: sum
+                label: Providers With Patient Facing Data
+                description: Number of providers with valid patient-facing data.
+
+    # --------------------------------------------------
+    # dbt Semantic Layer Metrics
+    # --------------------------------------------------
 
     metrics:
 
@@ -113,7 +153,9 @@ models:
         expr: patient_facing_denominator_flag
 
 
-# Advanced Metrics
+# --------------------------------------------------
+# Advanced dbt Semantic Metrics
+# --------------------------------------------------
 
 metrics:
 

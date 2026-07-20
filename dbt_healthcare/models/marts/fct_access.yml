@@ -12,15 +12,46 @@ models:
       One row per eligible new appointment with access wait days
       and administrative days information.
 
+    config:
+      meta:
+        metrics:
+          appointments_meeting_14_wait_days_pct:
+            type: number
+            label: Appointments Meeting 14 Wait Days %
+            description: Percentage of appointments meeting the 14-day wait standard.
+            sql: >
+              ${appointments_meeting_14_wait_days}
+              / NULLIF(${appointments_with_wait_days}, 0)
+            format: "0.0%"
+
+          appointments_meeting_7_admin_days_pct:
+            type: number
+            label: Appointments Meeting 7 Admin Days %
+            description: >
+              Percentage of appointments meeting the 7-day administrative standard.
+            sql: >
+              ${appointments_meeting_7_admin_days}
+              / NULLIF(${appointments_with_admin_days}, 0)
+            format: "0.0%"
+
     columns:
 
-      # entities
+      # -------------------------
+      # Entities
+      # -------------------------
 
       - name: appointment_id
         description: Unique identifier for the appointment.
         entity:
           type: primary
           name: appointment_id
+        config:
+          meta:
+            metrics:
+              appointment_count:
+                type: count_distinct
+                label: Appointment Count
+                description: Distinct count of eligible appointments.
         data_tests:
           - not_null
           - unique
@@ -61,7 +92,9 @@ models:
           type: foreign
           name: referral_id
 
-      # time dimensions
+      # -------------------------
+      # Time Dimensions
+      # -------------------------
 
       - name: appointment_made_date
         description: Date the appointment was scheduled.
@@ -89,7 +122,9 @@ models:
         dimension:
           type: time
 
-      # categorical dimensions
+      # -------------------------
+      # Categorical Dimensions
+      # -------------------------
 
       - name: scheduled_online
         description: Indicates whether the appointment was scheduled online.
@@ -126,7 +161,78 @@ models:
         dimension:
           type: categorical
 
-    # simple metrics
+      # -------------------------
+      # Metric Source Columns
+      # -------------------------
+
+      - name: meets_14_wait_days_flag
+        description: Indicates whether the appointment met the 14-day wait standard.
+        dimension:
+          type: categorical
+        config:
+          meta:
+            metrics:
+              appointments_meeting_14_wait_days:
+                type: sum
+                label: Appointments Meeting 14 Wait Days
+                description: >
+                  Number of appointments with calculated wait days
+                  of 14 days or less.
+
+      - name: wait_days_denominator_flag
+        description: Indicates whether the appointment has a valid wait-days value.
+        dimension:
+          type: categorical
+        config:
+          meta:
+            metrics:
+              appointments_with_wait_days:
+                type: sum
+                label: Appointments With Wait Days
+                description: >
+                  Number of appointments with a valid calculated wait-days value.
+
+      - name: meets_7_admin_days_flag
+        description: Indicates whether the appointment met the 7-day administrative standard.
+        dimension:
+          type: categorical
+        config:
+          meta:
+            metrics:
+              appointments_meeting_7_admin_days:
+                type: sum
+                label: Appointments Meeting 7 Admin Days
+                description: >
+                  Number of appointments with calculated administrative days
+                  of 7 days or less.
+
+      - name: admin_days_denominator_flag
+        description: Indicates whether the appointment has valid administrative days.
+        dimension:
+          type: categorical
+        config:
+          meta:
+            metrics:
+              appointments_with_admin_days:
+                type: sum
+                label: Appointments With Admin Days
+                description: >
+                  Number of appointments with a valid calculated
+                  administrative-days value.
+
+      - name: calculated_wait_days
+        description: Calculated number of days between scheduling and appointment date.
+        config:
+          meta:
+            metrics:
+              median_wait_days:
+                type: median
+                label: Median Wait Days
+                description: Median calculated wait days for eligible appointments.
+
+    # -------------------------
+    # dbt Semantic Layer Metrics
+    # -------------------------
 
     metrics:
 
@@ -180,11 +286,11 @@ models:
         expr: appointment_id
 
 
-# advanced metrics
+# -------------------------
+# Advanced dbt Semantic Metrics
+# -------------------------
 
 metrics:
-
-  # ratio metrics
 
   - name: appointments_meeting_14_wait_days_pct
     label: Appointments Meeting 14 Wait Days %
