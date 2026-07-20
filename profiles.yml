@@ -17,29 +17,14 @@ dbt_healthcare:
   target: cloud
 
   outputs:
-
-    duckdb:
-      type: duckdb
-      path: dev.duckdb
-      threads: 1
-
-    postgres:
-      type: postgres
-      host: localhost
-      port: 5432
-      user: healthcare_user
-      password: healthcare_password
-      dbname: healthcare_analytics
-      schema: analytics
-      threads: 4
-
     cloud:
-      type: postgres
-      host: ep-spring-bread-aw1txlze-pooler.c-12.us-east-1.aws.neon.tech
-      user: neondb_owner
-      password: npg_RBwJ5ciP0KbW
-      port: 5432
-      dbname: neondb
-      schema: analytics
+      type: snowflake
+      account: UAINDNN-DN02045
+      user: ARTHIANBALAGAN
+      password: YOUR_PASSWORD
+      role: ACCOUNTADMIN
+      warehouse: COMPUTE_WH
+      database: HEALTHCARE_ANALYTICS
+      schema: DBT_ARTHI
       threads: 4
-      sslmode: require
+      client_session_keep_alive: false
