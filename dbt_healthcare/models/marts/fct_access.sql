@@ -249,7 +249,11 @@ final as (
         year_month_sequence,
         calendar_year,
         fiscal_year,
-
+        case
+            when calendar_year = extract(year from current_date) then 'Current Year'
+            when calendar_year = extract(year from current_date) - 1 then 'Prior Year'
+            else 'Other'
+        end as chart_period,
         current_date as refresh_date
 
     from eligible_appointments

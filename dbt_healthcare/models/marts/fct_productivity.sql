@@ -89,6 +89,7 @@ joined as (
         c.year_month_sequence,
         c.calendar_year,
         c.fiscal_year
+        
 
     from productivity pr
 
@@ -159,12 +160,18 @@ final as (
             when source_percent_patient_facing is not null then 1
             else 0
         end as patient_facing_denominator_flag,
+        
 
         month_name_short,
         month_year,
         year_month,
         year_month_sequence,
         calendar_year,
+        case
+            when calendar_year = extract(year from current_date) then 'Current Year'
+            when calendar_year = extract(year from current_date) - 1 then 'Prior Year'
+            else 'Other'
+        end as chart_period,
         fiscal_year,
 
         current_date as refresh_date
