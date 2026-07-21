@@ -16,7 +16,10 @@ cleaned as (
         trim(month_name_short) as month_name_short,
         trim(month_year) as month_year,
 
+        month(cast(calendar_date as date)) as month_number,
+
         cast(year_month as integer) as year_month,
+
         cast(year_month_sequence as integer)
             as year_month_sequence,
 
