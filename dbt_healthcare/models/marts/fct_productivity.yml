@@ -9,8 +9,7 @@ models:
     agg_time_dimension: month_begin_date
 
     description: >
-      One row per provider per department per month with productivity
-      information.
+      One row per provider per department per month with productivity information.
 
     columns:
 
@@ -29,7 +28,6 @@ models:
               provider_count:
                 type: count_distinct
                 label: Provider Count
-                description: Distinct count of providers.
         data_tests:
           - not_null
 
@@ -60,13 +58,22 @@ models:
           type: time
 
       # -------------------------
-      # Categorical Dimensions
+      # Calendar Dimensions
       # -------------------------
 
       - name: calendar_year
         description: Calendar year.
-        dimension:
-          type: categorical
+        config:
+          meta:
+            dimension:
+              label: Calendar Year
+
+      - name: fiscal_year
+        description: Fiscal year.
+        config:
+          meta:
+            dimension:
+              label: Fiscal Year
 
       - name: month_name_short
         description: Three-letter month abbreviation.
@@ -76,127 +83,61 @@ models:
               label: Month
 
       - name: month_number
-        description: Calendar month number from 1 through 12.
+        description: Calendar month number.
         config:
           meta:
             dimension:
               label: Month Number
-          
+
       - name: chart_period
-        description: >
-          Relative reporting period based on the current calendar year.
-          Values are Current Year, Prior Year, or Other.
+        description: Current Year / Prior Year.
         config:
           meta:
             dimension:
               label: Chart Period
-              
-      - name: fiscal_year
-        description: Fiscal year.
-        dimension:
-          type: categorical
 
       # -------------------------
-      # Metric Columns
+      # Productivity Metrics
       # -------------------------
 
       - name: percent_patient_facing
-        description: Percentage of provider hours that are patient-facing.
-        dimension:
-          type: categorical
+        description: Patient-facing percentage stored as a decimal (0-1).
         config:
           meta:
             metrics:
-              total_patient_facing_percent:
-                type: sum
-                label: Total Patient Facing Percent
-                description: Sum of patient-facing percentages.
 
               average_patient_facing_percent:
                 type: average
-                label: Average Patient Facing Percent
-                description: Average patient-facing percentage.
+                label: Average Patient Facing %
+                format: "0.0%"
+
+              total_patient_facing_percent:
+                type: sum
+                label: Total Patient Facing %
+                format: "0.0%"
 
       - name: meets_80_percent_flag
-        description: Indicates whether the provider met the 80% target.
-        dimension:
-          type: categorical
+        description: 1 if provider met the 80% target.
         config:
           meta:
             metrics:
+
               providers_meeting_80_percent:
                 type: sum
-                label: Providers Meeting 80 Percent
-                description: Number of provider rows meeting the target.
+                label: Providers Meeting ≥80%
 
       - name: patient_facing_denominator_flag
-        description: Indicates whether the provider has valid patient-facing data.
-        dimension:
-          type: categorical
+        description: 1 if provider has valid patient-facing data.
         config:
           meta:
             metrics:
+
               providers_with_patient_facing:
                 type: sum
                 label: Providers With Patient Facing Data
-                description: Number of providers with valid patient-facing data.
 
-    # --------------------------------------------------
-    # dbt Semantic Layer Metrics
-    # --------------------------------------------------
-
-    metrics:
-
-      - name: total_patient_facing_percent
-        label: Total Patient Facing Percent
-        description: Sum of patient-facing percentages.
-        type: simple
-        agg: sum
-        expr: percent_patient_facing
-        format: percent
-
-      - name: provider_count
-        label: Provider Count
-        description: Distinct count of providers.
-        type: simple
-        agg: count_distinct
-        expr: provider_id
-
-      - name: providers_meeting_80_percent
-        label: Providers Meeting 80 Percent
-        description: Number of provider rows meeting the 80% target.
-        type: simple
-        agg: sum
-        expr: meets_80_percent_flag
-        format: percent
-
-      - name: providers_with_patient_facing
-        label: Providers With Patient Facing Data
-        description: Number of provider rows with valid patient-facing information.
-        type: simple
-        agg: sum
-        expr: patient_facing_denominator_flag
-        format: percent
-
-
-# --------------------------------------------------
-# Advanced dbt Semantic Metrics
-# --------------------------------------------------
-
-metrics:
-
-  - name: average_patient_facing_percent
-    label: Average Patient Facing Percent
-    description: Average patient-facing percentage across providers.
-    type: ratio
-    numerator: total_patient_facing_percent
-    denominator: providers_with_patient_facing
-    format: percent
-
-  - name: providers_meeting_80_percent_pct
-    label: Providers Meeting ≥80% Patient Facing Hours
-    description: Percentage of providers meeting the 80% patient-facing target.
-    type: ratio
-    numerator: providers_meeting_80_percent
-    denominator: providers_with_patient_facing
-    format: percent
+              providers_meeting_80_percent_pct:
+                type: percent_of_total
+                sql: ${providers_meeting_80_percent} / ${providers_with_patient_facing}
+                label: Providers Meeting ≥80%
+                format: "0.0%"
