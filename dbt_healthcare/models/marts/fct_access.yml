@@ -158,6 +158,21 @@ models:
         description: Calendar year.
         dimension:
           type: categorical
+
+      - name: month_name_short
+        description: Three-letter month abbreviation.
+        config:
+          meta:
+            dimension:
+              label: Month
+
+      - name: month_number
+        description: Calendar month number from 1 through 12.
+        config:
+          meta:
+            dimension:
+              label: Month Number
+              
       - name: chart_period
         description: >
           Relative reporting period based on the current calendar year.
@@ -166,6 +181,7 @@ models:
           meta:
             dimension:
               label: Chart Period
+              
       - name: fiscal_year
         description: Fiscal year.
         dimension:
