@@ -153,6 +153,7 @@ models:
         type: simple
         agg: sum
         expr: percent_patient_facing
+        format: percent
 
       - name: provider_count
         label: Provider Count
@@ -167,6 +168,7 @@ models:
         type: simple
         agg: sum
         expr: meets_80_percent_flag
+        format: percent
 
       - name: providers_with_patient_facing
         label: Providers With Patient Facing Data
@@ -174,6 +176,7 @@ models:
         type: simple
         agg: sum
         expr: patient_facing_denominator_flag
+        format: percent
 
 
 # --------------------------------------------------
@@ -188,6 +191,7 @@ metrics:
     type: ratio
     numerator: total_patient_facing_percent
     denominator: providers_with_patient_facing
+    format: percent
 
   - name: providers_meeting_80_percent_pct
     label: Providers Meeting ≥80% Patient Facing Hours
@@ -195,3 +199,4 @@ metrics:
     type: ratio
     numerator: providers_meeting_80_percent
     denominator: providers_with_patient_facing
+    format: percent
