@@ -158,7 +158,14 @@ models:
         description: Calendar year.
         dimension:
           type: categorical
-
+      - name: chart_period
+        description: >
+          Relative reporting period based on the current calendar year.
+          Values are Current Year, Prior Year, or Other.
+        config:
+          meta:
+            dimension:
+              label: Chart Period
       - name: fiscal_year
         description: Fiscal year.
         dimension:
