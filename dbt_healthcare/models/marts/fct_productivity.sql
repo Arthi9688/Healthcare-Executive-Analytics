@@ -46,6 +46,7 @@ calendar as (
     select
         calendar_date,
         month_name_short,
+        month_number,
         month_year,
         year_month,
         year_month_sequence,
@@ -85,6 +86,7 @@ joined as (
 
         c.month_name_short,
         c.month_year,
+        c.month_number,
         c.year_month,
         c.year_month_sequence,
         c.calendar_year,
@@ -164,6 +166,7 @@ final as (
 
         month_name_short,
         month_year,
+        month_number,
         year_month,
         year_month_sequence,
         calendar_year,
