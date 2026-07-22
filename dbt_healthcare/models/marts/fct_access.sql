@@ -253,9 +253,8 @@ final as (
         calendar_year,
         fiscal_year,
         case
-            when calendar_year = extract(year from current_date) then 'Current Year'
-            when calendar_year = extract(year from current_date) - 1 then 'Prior Year'
-            else 'Other'
+            when calendar_year = extract(year from current_date) then year(current_date)
+            when calendar_year = extract(year from current_date) - 1 then year(current_date) -1
         end as chart_period,
         current_date as refresh_date
 
