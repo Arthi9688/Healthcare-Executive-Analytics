@@ -2,40 +2,42 @@ version: 2
 
 models:
   - name: fct_productivity
+    description: >
+      One row per provider per department per month with productivity information.
 
     semantic_model:
       enabled: true
 
     agg_time_dimension: month_begin_date
 
-    description: >
-      One row per provider per department per month with productivity information.
-
     config:
       meta:
         joins:
           - join: dim_department
-            sql_on: "${fct_productivity.department_id} = ${dim_department.department_id}"
+            sql_on: ${fct_productivity.department_id} = ${dim_department.department_id}
+
           - join: dim_provider
-            sql_on: "${fct_productivity.provider_id} = ${dim_provider.provider_id}"
+            sql_on: ${fct_productivity.provider_id} = ${dim_provider.provider_id}
 
     columns:
 
-      # -------------------------
+      # =====================================================
       # Entities
-      # -------------------------
+      # =====================================================
 
       - name: provider_id
         description: Provider identifier.
         entity:
           name: provider_id
           type: primary
+
         config:
           meta:
             metrics:
               provider_count:
                 type: count_distinct
                 label: Provider Count
+
         data_tests:
           - not_null
 
@@ -44,148 +46,140 @@ models:
         entity:
           name: department_id
           type: foreign
+
         data_tests:
           - not_null
 
-      # -------------------------
+      # =====================================================
       # Time Dimensions
-      # -------------------------
+      # =====================================================
 
       - name: month_begin_date
-        description: Beginning of the reporting month.
-        granularity: month
+        description: Beginning of reporting month.
         dimension:
           type: time
+        granularity: month
+
         data_tests:
           - not_null
 
       - name: month_end_date
-        description: End of the reporting month.
-        granularity: month
+        description: End of reporting month.
         dimension:
           type: time
+        granularity: month
 
       - name: refresh_date
-        description: Date this row was last refreshed.
-        granularity: day
+        description: Refresh date.
         dimension:
           type: time
+        granularity: day
 
-      # -------------------------
-      # Calendar Dimensions
-      # -------------------------
+      # =====================================================
+      # Categorical Dimensions
+      # =====================================================
 
       - name: calendar_year
-        description: Calendar year.
-        config:
-          meta:
-            dimension:
-              label: Calendar Year
 
       - name: fiscal_year
-        description: Fiscal year.
-        config:
-          meta:
-            dimension:
-              label: Fiscal Year
 
       - name: month_name_short
-        description: Three-letter month abbreviation.
-        config:
-          meta:
-            dimension:
-              label: Month
 
       - name: month_number
-        description: Calendar month number.
-        config:
-          meta:
-            dimension:
-              label: Month Number
 
       - name: month_year
-        description: Month and year label (e.g. Jan-2026).
-        dimension:
-          type: categorical
 
       - name: year_month
-        description: Year-month sortable key (e.g. 2026-01).
-        dimension:
-          type: categorical
 
       - name: year_month_sequence
-        description: Sequential integer for year-month ordering.
-        dimension:
-          type: number
 
       - name: chart_period
-        description: Current Year / Prior Year.
-        config:
-          meta:
-            dimension:
-              label: Chart Period
 
-      # -------------------------
-      # Raw Productivity Inputs
-      # -------------------------
+      # =====================================================
+      # Numeric Fields
+      # =====================================================
 
       - name: clinical_fte
-        description: Provider's clinical full-time-equivalent value.
-        dimension:
-          type: number
 
-      - name: business_days_in_month
-        description: Number of business days in the reporting month.
-        dimension:
-          type: number
-
-      - name: regular_available_hours
-        description: Regular available hours for the provider in the month.
-        dimension:
-          type: number
-
-      - name: source_expected_patient_facing_hours
-        description: Expected patient-facing hours as originally sourced.
-        dimension:
-          type: number
-
-      # -------------------------
-      # Productivity Metrics
-      # -------------------------
-
-      - name: percent_patient_facing
-        description: Patient-facing percentage stored as a decimal (0-1).
         config:
           meta:
             metrics:
+
+              total_clinical_fte:
+                type: sum
+                label: Total Clinical FTE
+
+              average_clinical_fte:
+                type: average
+                label: Average Clinical FTE
+
+      - name: business_days_in_month
+
+        config:
+          meta:
+            metrics:
+
+              average_business_days:
+                type: average
+                label: Average Business Days
+
+      - name: regular_available_hours
+
+        config:
+          meta:
+            metrics:
+
+              total_regular_available_hours:
+                type: sum
+                label: Total Regular Available Hours
+
+      - name: source_expected_patient_facing_hours
+
+        config:
+          meta:
+            metrics:
+
+              total_expected_patient_facing_hours:
+                type: sum
+                label: Expected Patient Facing Hours
+
+      # =====================================================
+      # Productivity Metrics
+      # =====================================================
+
+      - name: percent_patient_facing
+
+        description: Patient-facing percentage stored as decimal.
+
+        config:
+          meta:
+            metrics:
+
               average_patient_facing_percent:
                 type: average
                 label: Average Patient Facing %
                 format: "0.0%"
-              total_patient_facing_percent:
-                type: sum
-                label: Total Patient Facing %
-                format: "0.0%"
 
       - name: meets_80_percent_flag
-        description: 1 if provider met the 80% target.
+
+        description: 1 when provider meets 80% target.
+
         config:
           meta:
             metrics:
+
               providers_meeting_80_percent:
                 type: sum
                 label: Providers Meeting ≥80%
 
       - name: patient_facing_denominator_flag
-        description: 1 if provider has valid patient-facing data.
+
+        description: Denominator for patient-facing percentage.
+
         config:
           meta:
             metrics:
+
               providers_with_patient_facing:
                 type: sum
                 label: Providers With Patient Facing Data
-              providers_meeting_80_percent_pct:
-                type: percent_of_total
-                sql: ${providers_meeting_80_percent} / ${providers_with_patient_facing}
-                label: Providers Meeting ≥80%
-                format: "0.0%"
