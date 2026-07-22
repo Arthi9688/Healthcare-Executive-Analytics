@@ -23,24 +23,9 @@ Although the data is synthetic, the project structure, modeling approach, and da
 
 ## Project Architecture
 
-```text
-Synthetic Healthcare Data
-        │
-        ▼
-    Snowflake
-        │
-        ▼
-      dbt Models
-        │
-        ▼
- dbt Semantic Layer
-        │
-        ▼
-  Lightdash Cloud
-        │
-        ▼
-Executive Dashboard
-```
+
+Synthetic Healthcare Data → Snowflake → dbt (Staging Models → Dimension Models → Fact Models) → dbt Semantic Layer (MetricFlow) → Lightdash Cloud → Healthcare Executive Analytics Dashboard
+
 
 ---
 
@@ -50,23 +35,23 @@ Executive Dashboard
 
 These models clean and prepare the raw data before it's transformed into analytics-ready models.
 
-- `stg_appointments`
-- `stg_calendar`
-- `stg_departments`
-- `stg_patients`
-- `stg_provider_productivity`
-- `stg_providers`
+- stg_appointments
+- stg_calendar
+- stg_departments
+- stg_patients
+- stg_provider_productivity
+- stg_providers
 
 ### Dimension Models
 
-- `dim_department`
-- `dim_provider`
-- `time_spine_daily`
+- dim_department
+- dim_provider
+- time_spine_daily
 
 ### Fact Models
 
-- `fct_access`
-- `fct_productivity`
+- fct_access
+- fct_productivity
 
 ---
 
