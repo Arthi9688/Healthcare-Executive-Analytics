@@ -17,6 +17,8 @@ models:
         joins:
           - join: dim_department
             sql_on: "${fct_access.department_id} = ${dim_department.department_id}"
+          - join: dim_provider
+            sql_on: "${fct_access.provider_id} = ${dim_provider.provider_id}"
         metrics:
           appointments_meeting_14_wait_days_pct:
             type: number
@@ -35,6 +37,28 @@ models:
             sql: >
               ${appointments_meeting_7_admin_days}
               / NULLIF(${appointments_with_admin_days}, 0)
+            format: "0.0%"
+
+          appointments_meeting_14_wait_days_pct_new_patients:
+            type: number
+            label: Appointments Meeting 14 Wait Days % (New Patients)
+            description: >
+              Percentage of new-to-division patient appointments meeting
+              the 14-day wait standard.
+            sql: >
+              ${appointments_meeting_14_wait_days_new_patients}
+              / NULLIF(${appointments_with_wait_days_new_patients}, 0)
+            format: "0.0%"
+
+          appointments_meeting_14_wait_days_pct_online:
+            type: number
+            label: Appointments Meeting 14 Wait Days % (Online Scheduled)
+            description: >
+              Percentage of online-scheduled appointments meeting
+              the 14-day wait standard.
+            sql: >
+              ${appointments_meeting_14_wait_days_online}
+              / NULLIF(${appointments_with_wait_days_online}, 0)
             format: "0.0%"
 
     columns:
@@ -125,6 +149,18 @@ models:
         dimension:
           type: time
 
+      - name: month_end_date
+        description: Last day of the reporting month.
+        granularity: month
+        dimension:
+          type: time
+
+      - name: refresh_date
+        description: Date this row was last refreshed.
+        granularity: day
+        dimension:
+          type: time
+
       # -------------------------
       # Categorical Dimensions
       # -------------------------
@@ -136,6 +172,11 @@ models:
 
       - name: visit_type_category
         description: Grouped visit type category.
+        dimension:
+          type: categorical
+
+      - name: visit_type_id
+        description: Identifier for the visit type.
         dimension:
           type: categorical
 
@@ -172,7 +213,22 @@ models:
           meta:
             dimension:
               label: Month Number
-              
+
+      - name: month_year
+        description: Month and year label (e.g. Jan-2026).
+        dimension:
+          type: categorical
+
+      - name: year_month
+        description: Year-month sortable key (e.g. 2026-01).
+        dimension:
+          type: categorical
+
+      - name: year_month_sequence
+        description: Sequential integer for year-month ordering.
+        dimension:
+          type: number
+
       - name: chart_period
         description: >
           Relative reporting period based on the current calendar year.
@@ -181,11 +237,25 @@ models:
           meta:
             dimension:
               label: Chart Period
-              
+
       - name: fiscal_year
         description: Fiscal year.
         dimension:
           type: categorical
+
+      # -------------------------
+      # Raw Source Columns
+      # -------------------------
+
+      - name: source_wait_days
+        description: Wait days as originally sourced, prior to recalculation.
+        dimension:
+          type: number
+
+      - name: source_admin_days
+        description: Admin days as originally sourced, prior to recalculation.
+        dimension:
+          type: number
 
       # -------------------------
       # Metric Source Columns
@@ -205,6 +275,20 @@ models:
                   Number of appointments with calculated wait days
                   of 14 days or less.
 
+              appointments_meeting_14_wait_days_new_patients:
+                type: sum
+                label: Appointments Meeting 14 Wait Days (New Patients)
+                description: >
+                  Number of new-to-division patient appointments with
+                  calculated wait days of 14 days or less.
+
+              appointments_meeting_14_wait_days_online:
+                type: sum
+                label: Appointments Meeting 14 Wait Days (Online Scheduled)
+                description: >
+                  Number of online-scheduled appointments with calculated
+                  wait days of 14 days or less.
+
       - name: wait_days_denominator_flag
         description: Indicates whether the appointment has a valid wait-days value.
         dimension:
@@ -217,6 +301,20 @@ models:
                 label: Appointments With Wait Days
                 description: >
                   Number of appointments with a valid calculated wait-days value.
+
+              appointments_with_wait_days_new_patients:
+                type: sum
+                label: Appointments With Wait Days (New Patients)
+                description: >
+                  Number of new-to-division patient appointments with a
+                  valid calculated wait-days value.
+
+              appointments_with_wait_days_online:
+                type: sum
+                label: Appointments With Wait Days (Online Scheduled)
+                description: >
+                  Number of online-scheduled appointments with a valid
+                  calculated wait-days value.
 
       - name: meets_7_admin_days_flag
         description: Indicates whether the appointment met the 7-day administrative standard.
@@ -248,6 +346,8 @@ models:
 
       - name: calculated_wait_days
         description: Calculated number of days between scheduling and appointment date.
+        dimension:
+          type: number
         config:
           meta:
             metrics:
@@ -255,6 +355,20 @@ models:
                 type: median
                 label: Median Wait Days
                 description: Median calculated wait days for eligible appointments.
+
+      - name: calculated_admin_days
+        description: >
+          Calculated number of days between referral entry and the
+          appointment being scheduled.
+        dimension:
+          type: number
+        config:
+          meta:
+            metrics:
+              median_admin_days:
+                type: median
+                label: Median Admin Days
+                description: Median calculated admin days for eligible appointments.
 
     # -------------------------
     # dbt Semantic Layer Metrics
@@ -304,12 +418,59 @@ models:
         agg: median
         expr: calculated_wait_days
 
+      - name: median_admin_days
+        label: Median Admin Days
+        description: Median calculated admin days for eligible appointments.
+        type: simple
+        agg: median
+        expr: calculated_admin_days
+
       - name: appointment_count
         label: Appointment Count
         description: Distinct count of eligible appointments.
         type: simple
         agg: count_distinct
         expr: appointment_id
+
+      - name: appointments_meeting_14_wait_days_new_patients
+        label: Appointments Meeting 14 Wait Days (New Patients)
+        description: >
+          Number of new-to-division patient appointments with calculated
+          wait days of 14 days or less.
+        type: simple
+        agg: sum
+        expr: meets_14_wait_days_flag
+        filter: "{{ Dimension('appointment_id__new_to_division') }} = 'Y'"
+
+      - name: appointments_with_wait_days_new_patients
+        label: Appointments With Wait Days (New Patients)
+        description: >
+          Number of new-to-division patient appointments with a valid
+          calculated wait-days value.
+        type: simple
+        agg: sum
+        expr: wait_days_denominator_flag
+        filter: "{{ Dimension('appointment_id__new_to_division') }} = 'Y'"
+
+      - name: appointments_meeting_14_wait_days_online
+        label: Appointments Meeting 14 Wait Days (Online Scheduled)
+        description: >
+          Number of online-scheduled appointments with calculated wait
+          days of 14 days or less.
+        type: simple
+        agg: sum
+        expr: meets_14_wait_days_flag
+        filter: "{{ Dimension('appointment_id__scheduled_online') }} = 'Y'"
+
+      - name: appointments_with_wait_days_online
+        label: Appointments With Wait Days (Online Scheduled)
+        description: >
+          Number of online-scheduled appointments with a valid calculated
+          wait-days value.
+        type: simple
+        agg: sum
+        expr: wait_days_denominator_flag
+        filter: "{{ Dimension('appointment_id__scheduled_online') }} = 'Y'"
 
 
 # -------------------------
@@ -332,3 +493,21 @@ metrics:
     type: ratio
     numerator: appointments_meeting_7_admin_days
     denominator: appointments_with_admin_days
+
+  - name: appointments_meeting_14_wait_days_pct_new_patients
+    label: Appointments Meeting 14 Wait Days % (New Patients)
+    description: >
+      Percentage of new-to-division patient appointments meeting the
+      14-day wait standard.
+    type: ratio
+    numerator: appointments_meeting_14_wait_days_new_patients
+    denominator: appointments_with_wait_days_new_patients
+
+  - name: appointments_meeting_14_wait_days_pct_online
+    label: Appointments Meeting 14 Wait Days % (Online Scheduled)
+    description: >
+      Percentage of online-scheduled appointments meeting the 14-day
+      wait standard.
+    type: ratio
+    numerator: appointments_meeting_14_wait_days_online
+    denominator: appointments_with_wait_days_online
