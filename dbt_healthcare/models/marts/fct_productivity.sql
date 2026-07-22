@@ -171,8 +171,8 @@ final as (
         year_month_sequence,
         calendar_year,
         case
-            when calendar_year = extract(year from current_date) then 'Current Year'
-            when calendar_year = extract(year from current_date) - 1 then 'Prior Year'
+            when calendar_year = extract(year from current_date) then year(current_date)
+            when calendar_year = extract(year from current_date) - 1 then year(current_date) -1
             else 'Other'
         end as chart_period,
         fiscal_year,
