@@ -11,6 +11,14 @@ models:
     description: >
       One row per provider per department per month with productivity information.
 
+    config:
+      meta:
+        joins:
+          - join: dim_department
+            sql_on: "${fct_productivity.department_id} = ${dim_department.department_id}"
+          - join: dim_provider
+            sql_on: "${fct_productivity.provider_id} = ${dim_provider.provider_id}"
+
     columns:
 
       # -------------------------
@@ -57,6 +65,12 @@ models:
         dimension:
           type: time
 
+      - name: refresh_date
+        description: Date this row was last refreshed.
+        granularity: day
+        dimension:
+          type: time
+
       # -------------------------
       # Calendar Dimensions
       # -------------------------
@@ -89,12 +103,51 @@ models:
             dimension:
               label: Month Number
 
+      - name: month_year
+        description: Month and year label (e.g. Jan-2026).
+        dimension:
+          type: categorical
+
+      - name: year_month
+        description: Year-month sortable key (e.g. 2026-01).
+        dimension:
+          type: categorical
+
+      - name: year_month_sequence
+        description: Sequential integer for year-month ordering.
+        dimension:
+          type: number
+
       - name: chart_period
         description: Current Year / Prior Year.
         config:
           meta:
             dimension:
               label: Chart Period
+
+      # -------------------------
+      # Raw Productivity Inputs
+      # -------------------------
+
+      - name: clinical_fte
+        description: Provider's clinical full-time-equivalent value.
+        dimension:
+          type: number
+
+      - name: business_days_in_month
+        description: Number of business days in the reporting month.
+        dimension:
+          type: number
+
+      - name: regular_available_hours
+        description: Regular available hours for the provider in the month.
+        dimension:
+          type: number
+
+      - name: source_expected_patient_facing_hours
+        description: Expected patient-facing hours as originally sourced.
+        dimension:
+          type: number
 
       # -------------------------
       # Productivity Metrics
@@ -105,12 +158,10 @@ models:
         config:
           meta:
             metrics:
-
               average_patient_facing_percent:
                 type: average
                 label: Average Patient Facing %
                 format: "0.0%"
-
               total_patient_facing_percent:
                 type: sum
                 label: Total Patient Facing %
@@ -121,7 +172,6 @@ models:
         config:
           meta:
             metrics:
-
               providers_meeting_80_percent:
                 type: sum
                 label: Providers Meeting ≥80%
@@ -131,11 +181,9 @@ models:
         config:
           meta:
             metrics:
-
               providers_with_patient_facing:
                 type: sum
                 label: Providers With Patient Facing Data
-
               providers_meeting_80_percent_pct:
                 type: percent_of_total
                 sql: ${providers_meeting_80_percent} / ${providers_with_patient_facing}
