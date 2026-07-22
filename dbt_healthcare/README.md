@@ -123,3 +123,6 @@ This project helped me connect analytics engineering concepts with healthcare re
 ## Disclaimer
 
 This project uses **synthetic healthcare data** created for learning and portfolio purposes. It does not contain any real patient or organizational data.
+
+<img width="1400" height="1440" alt="slack-image-notification-0_KEbd8vM2KDjBku6WBFo" src="https://github.com/user-attachments/assets/ad6d7848-a822-42bc-8aeb-b4a33c3666c3" />
+
