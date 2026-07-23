@@ -8,6 +8,8 @@ The project uses a synthetic healthcare dataset inspired by ambulatory healthcar
 
 Although the data is synthetic, the project structure, modeling approach, and dashboard design are based on real-world healthcare analytics concepts.
 
+Check it out here: https://app.lightdash.cloud/projects/62fba027-2e4a-44ae-beca-afb702be8366/dashboards/b100ff22-3dd2-4f1e-a2b0-8d45d510aeee/view
+
 ---
 
 ## Tech Stack
